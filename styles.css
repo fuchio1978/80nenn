@@ -121,12 +121,6 @@ button:not(:disabled):active {
   transform: translateY(1px);
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
 .download {
   width: fit-content;
 }
@@ -228,10 +222,6 @@ button:not(:disabled):active {
   button,
   .download {
     width: 100%;
-  }
-
-  .actions {
-    flex-direction: column;
   }
 
   .grid {
