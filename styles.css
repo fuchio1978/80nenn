@@ -49,6 +49,8 @@ main.page {
   border: 1px solid var(--border);
   padding: clamp(24px, 4vw, 36px);
   box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
 }
 
 .controls h1 {
@@ -117,6 +119,12 @@ button:not(:disabled):focus {
 
 button:not(:disabled):active {
   transform: translateY(1px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .download {
@@ -220,6 +228,10 @@ button:not(:disabled):active {
   button,
   .download {
     width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
   }
 
   .grid {
