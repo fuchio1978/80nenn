@@ -4,13 +4,19 @@ const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申",
 const BASE_YEAR = 1984; // 甲子
 const GRID_YEARS = 80;
 const DEFAULT_DOWNLOAD_LABEL = "PNGとしてダウンロード";
+const WORKING_DOWNLOAD_LABEL = "画像を作成中...";
 
 const form = document.getElementById("birthYearForm");
 const birthYearInput = document.getElementById("birthYear");
 const yearGrid = document.getElementById("yearGrid");
 const downloadBtn = document.getElementById("downloadBtn");
 
-downloadBtn.textContent = DEFAULT_DOWNLOAD_LABEL;
+function setDownloadState({ disabled, label }) {
+  downloadBtn.disabled = disabled;
+  downloadBtn.textContent = label;
+}
+
+setDownloadState({ disabled: true, label: DEFAULT_DOWNLOAD_LABEL });
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
@@ -68,8 +74,7 @@ function canvasToBlob(canvas) {
 }
 
 async function downloadGridAsPng() {
-  downloadBtn.disabled = true;
-  downloadBtn.textContent = "画像を作成中...";
+  setDownloadState({ disabled: true, label: WORKING_DOWNLOAD_LABEL });
 
   try {
     const canvas = await html2canvas(yearGrid, {
@@ -91,8 +96,7 @@ async function downloadGridAsPng() {
   } catch (error) {
     alert(error.message || "PNGの作成に失敗しました。");
   } finally {
-    downloadBtn.disabled = false;
-    downloadBtn.textContent = DEFAULT_DOWNLOAD_LABEL;
+    setDownloadState({ disabled: false, label: DEFAULT_DOWNLOAD_LABEL });
   }
 }
 
@@ -106,7 +110,7 @@ form.addEventListener("submit", (event) => {
   }
 
   renderGrid(birthYear);
-  downloadBtn.disabled = false;
+  setDownloadState({ disabled: false, label: DEFAULT_DOWNLOAD_LABEL });
 });
 
 downloadBtn.addEventListener("click", () => {
