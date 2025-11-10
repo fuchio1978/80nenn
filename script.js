@@ -1,29 +1,12 @@
 const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
 const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 
+const BASE_YEAR = 1984; // 甲子
+
 const form = document.getElementById("birthYearForm");
 const birthYearInput = document.getElementById("birthYear");
 const yearGrid = document.getElementById("yearGrid");
 const downloadBtn = document.getElementById("downloadBtn");
-
-const BASE_YEAR = 1984; // 甲子
-
-function updateGridMetrics() {
-  if (yearGrid.children.length === 0) {
-    yearGrid.removeAttribute("aria-colcount");
-    yearGrid.removeAttribute("aria-rowcount");
-    return;
-  }
-
-  const columnCount = window
-    .getComputedStyle(yearGrid)
-    .gridTemplateColumns.split(" ")
-    .filter(Boolean).length;
-  const safeColumnCount = columnCount > 0 ? columnCount : 1;
-  const rowCount = Math.ceil(yearGrid.children.length / safeColumnCount);
-  yearGrid.setAttribute("aria-colcount", String(safeColumnCount));
-  yearGrid.setAttribute("aria-rowcount", String(rowCount));
-}
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
@@ -35,19 +18,18 @@ function getGanzhi(year) {
 
 function createCell(age, year, zodiac) {
   const cell = document.createElement("div");
-  cell.className = "year-grid__cell";
-  cell.setAttribute("role", "gridcell");
+  cell.className = "cell";
 
   const ageEl = document.createElement("div");
-  ageEl.className = "year-grid__age";
+  ageEl.className = "cell__age";
   ageEl.textContent = `${age}歳`;
 
   const yearEl = document.createElement("div");
-  yearEl.className = "year-grid__year";
+  yearEl.className = "cell__year";
   yearEl.textContent = `${year}年`;
 
   const zodiacEl = document.createElement("div");
-  zodiacEl.className = "year-grid__zodiac";
+  zodiacEl.className = "cell__zodiac";
   zodiacEl.textContent = zodiac;
 
   cell.append(ageEl, yearEl, zodiacEl);
@@ -66,7 +48,19 @@ function renderGrid(birthYear) {
 
   yearGrid.append(fragment);
   yearGrid.dataset.startYear = String(birthYear);
-  updateGridMetrics();
+}
+
+function canvasToBlob(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error("画像データの作成に失敗しました。"));
+        return;
+      }
+
+      resolve(blob);
+    });
+  });
 }
 
 async function downloadGridAsPng() {
@@ -81,25 +75,16 @@ async function downloadGridAsPng() {
       useCORS: true,
     });
 
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        throw new Error("画像データの作成に失敗しました。");
-      }
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      const baseYear =
-        yearGrid.dataset.startYear ||
-        yearGrid
-          .querySelector(".year-grid__year")
-          ?.textContent?.replace(/[^0-9]/g, "");
-      link.download = baseYear
-        ? `${baseYear}-80years-ganzhi.png`
-        : "80-years-ganzhi.png";
-      link.click();
-      URL.revokeObjectURL(url);
-    });
+    const blob = await canvasToBlob(canvas);
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const baseYear = yearGrid.dataset.startYear;
+    link.download = baseYear
+      ? `${baseYear}-80years-ganzhi.png`
+      : "80-years-ganzhi.png";
+    link.click();
+    URL.revokeObjectURL(url);
   } catch (error) {
     alert(error.message || "PNGの作成に失敗しました。");
   } finally {
@@ -127,12 +112,4 @@ downloadBtn.addEventListener("click", () => {
   }
 
   downloadGridAsPng();
-});
-
-window.addEventListener("resize", () => {
-  if (yearGrid.children.length === 0) {
-    return;
-  }
-
-  updateGridMetrics();
 });

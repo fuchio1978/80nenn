@@ -1,16 +1,14 @@
 :root {
   color-scheme: light;
-  --page-width: min(100%, 1080px);
-  --page-padding: clamp(16px, 3vw, 32px);
+  --page-max-width: min(100%, 1080px);
+  --page-padding: clamp(16px, 4vw, 32px);
   --surface: #ffffff;
-  --surface-muted: #f8fafc;
-  --border: #d0d7e1;
+  --surface-muted: #f1f5f9;
+  --border: #d4d4d8;
   --text-main: #1f2937;
-  --text-muted: #475569;
-  --text-subtle: #64748b;
+  --text-muted: #4b5563;
   --accent: #2563eb;
   --accent-dark: #1d4ed8;
-  --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
 }
 
@@ -40,8 +38,8 @@ main.page {
   display: flex;
   flex-direction: column;
   gap: clamp(24px, 4vw, 40px);
-  max-width: var(--page-width);
-  width: var(--page-width);
+  max-width: var(--page-max-width);
+  width: var(--page-max-width);
   padding: var(--page-padding);
 }
 
@@ -50,7 +48,7 @@ main.page {
   border-radius: 20px;
   border: 1px solid var(--border);
   padding: clamp(24px, 4vw, 36px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
 }
 
 .controls h1 {
@@ -95,11 +93,6 @@ input[type="number"]:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-.actions {
-  display: flex;
-  justify-content: flex-start;
-}
-
 button {
   cursor: pointer;
   border: none;
@@ -133,7 +126,7 @@ button:not(:disabled):active {
 .note {
   margin: 14px 0 0;
   font-size: 14px;
-  color: var(--text-subtle);
+  color: #64748b;
 }
 
 .table-wrapper {
@@ -141,11 +134,11 @@ button:not(:disabled):active {
   border-radius: 24px;
   border: 1px solid var(--border);
   padding: clamp(18px, 3vw, 32px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
   overflow: hidden;
 }
 
-.year-grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));
   border: 1px solid var(--border);
@@ -154,7 +147,7 @@ button:not(:disabled):active {
   background: #fff;
 }
 
-.year-grid__cell {
+.cell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-rows: repeat(2, auto);
@@ -168,26 +161,26 @@ button:not(:disabled):active {
   background: #fff;
 }
 
-.year-grid__cell:nth-child(10n) {
+.cell:nth-child(10n) {
   border-right: none;
 }
 
-.year-grid__cell:nth-last-child(-n + 10) {
+.cell:nth-last-child(-n + 10) {
   border-bottom: none;
 }
 
-.year-grid__age {
+.cell__age {
   justify-self: start;
   font-weight: 700;
   color: var(--text-muted);
 }
 
-.year-grid__year {
+.cell__year {
   justify-self: start;
   color: var(--text-main);
 }
 
-.year-grid__zodiac {
+.cell__zodiac {
   writing-mode: vertical-rl;
   text-orientation: upright;
   display: flex;
@@ -199,7 +192,7 @@ button:not(:disabled):active {
 }
 
 @media (max-width: 960px) {
-  .year-grid {
+  .grid {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 }
@@ -210,11 +203,11 @@ button:not(:disabled):active {
     padding: 20px;
   }
 
-  .year-grid {
+  .grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  .year-grid__cell {
+  .cell {
     min-height: 88px;
   }
 }
@@ -224,16 +217,12 @@ button:not(:disabled):active {
     flex-direction: column;
   }
 
-  .actions {
-    justify-content: stretch;
-  }
-
   button,
   .download {
     width: 100%;
   }
 
-  .year-grid {
+  .grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -243,19 +232,19 @@ button:not(:disabled):active {
     font-size: 22px;
   }
 
-  .year-grid__cell {
+  .cell {
     padding: 10px 8px;
   }
 
-  .year-grid__age {
+  .cell__age {
     font-size: 15px;
   }
 
-  .year-grid__year {
+  .cell__year {
     font-size: 14px;
   }
 
-  .year-grid__zodiac {
+  .cell__zodiac {
     font-size: 18px;
   }
 }
