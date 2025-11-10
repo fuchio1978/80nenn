@@ -2,11 +2,15 @@ const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "�
 const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 
 const BASE_YEAR = 1984; // 甲子
+const GRID_YEARS = 80;
+const DEFAULT_DOWNLOAD_LABEL = "PNGとしてダウンロード";
 
 const form = document.getElementById("birthYearForm");
 const birthYearInput = document.getElementById("birthYear");
 const yearGrid = document.getElementById("yearGrid");
 const downloadBtn = document.getElementById("downloadBtn");
+
+downloadBtn.textContent = DEFAULT_DOWNLOAD_LABEL;
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
@@ -40,7 +44,7 @@ function renderGrid(birthYear) {
   yearGrid.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
-  for (let age = 0; age < 80; age += 1) {
+  for (let age = 0; age < GRID_YEARS; age += 1) {
     const year = birthYear + age;
     const zodiac = getGanzhi(year);
     fragment.appendChild(createCell({ age, year, zodiac }));
@@ -65,7 +69,6 @@ function canvasToBlob(canvas) {
 
 async function downloadGridAsPng() {
   downloadBtn.disabled = true;
-  const defaultLabel = "PNGとしてダウンロード";
   downloadBtn.textContent = "画像を作成中...";
 
   try {
@@ -89,7 +92,7 @@ async function downloadGridAsPng() {
     alert(error.message || "PNGの作成に失敗しました。");
   } finally {
     downloadBtn.disabled = false;
-    downloadBtn.textContent = defaultLabel;
+    downloadBtn.textContent = DEFAULT_DOWNLOAD_LABEL;
   }
 }
 
