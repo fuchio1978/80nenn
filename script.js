@@ -8,6 +8,23 @@ const downloadBtn = document.getElementById("downloadBtn");
 
 const BASE_YEAR = 1984; // 甲子
 
+function updateGridMetrics() {
+  if (yearGrid.children.length === 0) {
+    yearGrid.removeAttribute("aria-colcount");
+    yearGrid.removeAttribute("aria-rowcount");
+    return;
+  }
+
+  const columnCount = window
+    .getComputedStyle(yearGrid)
+    .gridTemplateColumns.split(" ")
+    .filter(Boolean).length;
+  const safeColumnCount = columnCount > 0 ? columnCount : 1;
+  const rowCount = Math.ceil(yearGrid.children.length / safeColumnCount);
+  yearGrid.setAttribute("aria-colcount", String(safeColumnCount));
+  yearGrid.setAttribute("aria-rowcount", String(rowCount));
+}
+
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
   const index = ((diff % 60) + 60) % 60;
@@ -19,6 +36,7 @@ function getGanzhi(year) {
 function createCell(age, year, zodiac) {
   const cell = document.createElement("div");
   cell.className = "year-grid__cell";
+  cell.setAttribute("role", "gridcell");
 
   const ageEl = document.createElement("div");
   ageEl.className = "year-grid__age";
@@ -47,6 +65,8 @@ function renderGrid(birthYear) {
   }
 
   yearGrid.append(fragment);
+  yearGrid.dataset.startYear = String(birthYear);
+  updateGridMetrics();
 }
 
 async function downloadGridAsPng() {
@@ -57,7 +77,8 @@ async function downloadGridAsPng() {
   try {
     const canvas = await html2canvas(yearGrid, {
       backgroundColor: "#ffffff",
-      scale: window.devicePixelRatio,
+      scale: Math.min(window.devicePixelRatio, 2),
+      useCORS: true,
     });
 
     canvas.toBlob((blob) => {
@@ -68,7 +89,14 @@ async function downloadGridAsPng() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "80-years-ganzhi.png";
+      const baseYear =
+        yearGrid.dataset.startYear ||
+        yearGrid
+          .querySelector(".year-grid__year")
+          ?.textContent?.replace(/[^0-9]/g, "");
+      link.download = baseYear
+        ? `${baseYear}-80years-ganzhi.png`
+        : "80-years-ganzhi.png";
       link.click();
       URL.revokeObjectURL(url);
     });
@@ -99,4 +127,12 @@ downloadBtn.addEventListener("click", () => {
   }
 
   downloadGridAsPng();
+});
+
+window.addEventListener("resize", () => {
+  if (yearGrid.children.length === 0) {
+    return;
+  }
+
+  updateGridMetrics();
 });

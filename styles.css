@@ -3,19 +3,20 @@
   --page-width: min(100%, 1080px);
   --page-padding: clamp(16px, 3vw, 32px);
   --surface: #ffffff;
-  --surface-muted: #f1f5f9;
-  --border: #cbd5e1;
-  --border-light: #e2e8f0;
-  --text-main: #1f2933;
+  --surface-muted: #f8fafc;
+  --border: #d0d7e1;
+  --text-main: #1f2937;
   --text-muted: #475569;
   --text-subtle: #64748b;
   --accent: #2563eb;
   --accent-dark: #1d4ed8;
-  --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", sans-serif;
+  --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -46,14 +47,14 @@ main.page {
 
 .controls {
   background: var(--surface);
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid var(--border);
   padding: clamp(24px, 4vw, 36px);
   box-shadow: var(--shadow);
 }
 
 .controls h1 {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
   font-size: clamp(26px, 3.4vw, 34px);
   font-weight: 700;
 }
@@ -67,7 +68,7 @@ main.page {
 
 .form {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .input-group {
@@ -94,6 +95,11 @@ input[type="number"]:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
+.actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
 button {
   cursor: pointer;
   border: none;
@@ -108,7 +114,7 @@ button {
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
 button:not(:disabled):hover,
@@ -125,14 +131,14 @@ button:not(:disabled):active {
 }
 
 .note {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   font-size: 14px;
   color: var(--text-subtle);
 }
 
 .table-wrapper {
   background: var(--surface);
-  border-radius: 22px;
+  border-radius: 24px;
   border: 1px solid var(--border);
   padding: clamp(18px, 3vw, 32px);
   box-shadow: var(--shadow);
@@ -143,7 +149,7 @@ button:not(:disabled):active {
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
   background: #fff;
 }
@@ -157,8 +163,8 @@ button:not(:disabled):active {
   gap: 6px;
   padding: 12px 10px;
   min-height: 84px;
-  border-right: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   background: #fff;
 }
 
@@ -192,7 +198,7 @@ button:not(:disabled):active {
   color: var(--text-main);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 960px) {
   .year-grid {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
@@ -216,6 +222,10 @@ button:not(:disabled):active {
 @media (max-width: 640px) {
   .input-group {
     flex-direction: column;
+  }
+
+  .actions {
+    justify-content: stretch;
   }
 
   button,
