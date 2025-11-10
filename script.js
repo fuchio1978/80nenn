@@ -10,26 +10,26 @@ const BASE_YEAR = 1984; // 甲子
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
-  const index = ((diff % 60) + 60) % 60; // wrap negative values
+  const index = ((diff % 60) + 60) % 60;
   const stem = stems[index % stems.length];
   const branch = branches[index % branches.length];
   return `${stem}${branch}`;
 }
 
-function createCell({ age, year, zodiac }) {
+function createCell(age, year, zodiac) {
   const cell = document.createElement("div");
-  cell.className = "year-table-cell";
+  cell.className = "year-grid__cell";
 
   const ageEl = document.createElement("div");
-  ageEl.className = "year-table-age";
+  ageEl.className = "year-grid__age";
   ageEl.textContent = `${age}歳`;
 
   const yearEl = document.createElement("div");
-  yearEl.className = "year-table-year";
+  yearEl.className = "year-grid__year";
   yearEl.textContent = `${year}年`;
 
   const zodiacEl = document.createElement("div");
-  zodiacEl.className = "year-table-zodiac";
+  zodiacEl.className = "year-grid__zodiac";
   zodiacEl.textContent = zodiac;
 
   cell.append(ageEl, yearEl, zodiacEl);
@@ -43,14 +43,15 @@ function renderGrid(birthYear) {
   for (let age = 0; age < 80; age += 1) {
     const year = birthYear + age;
     const zodiac = getGanzhi(year);
-    fragment.appendChild(createCell({ age, year, zodiac }));
+    fragment.append(createCell(age, year, zodiac));
   }
 
-  yearGrid.appendChild(fragment);
+  yearGrid.append(fragment);
 }
 
 async function downloadGridAsPng() {
   downloadBtn.disabled = true;
+  const defaultLabel = "PNGとしてダウンロード";
   downloadBtn.textContent = "画像を作成中...";
 
   try {
@@ -64,17 +65,18 @@ async function downloadGridAsPng() {
         throw new Error("画像データの作成に失敗しました。");
       }
 
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
+      link.href = url;
       link.download = "80-years-ganzhi.png";
       link.click();
-      URL.revokeObjectURL(link.href);
+      URL.revokeObjectURL(url);
     });
   } catch (error) {
     alert(error.message || "PNGの作成に失敗しました。");
   } finally {
     downloadBtn.disabled = false;
-    downloadBtn.textContent = "PNGとしてダウンロード";
+    downloadBtn.textContent = defaultLabel;
   }
 }
 
@@ -95,5 +97,6 @@ downloadBtn.addEventListener("click", () => {
   if (yearGrid.children.length === 0) {
     return;
   }
+
   downloadGridAsPng();
 });
