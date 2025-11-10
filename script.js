@@ -10,13 +10,13 @@ const downloadBtn = document.getElementById("downloadBtn");
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
-  const index = ((diff % 60) + 60) % 60;
+  const index = ((diff % 60) + 60) % 60; // wrap negative values
   const stem = stems[index % stems.length];
   const branch = branches[index % branches.length];
   return `${stem}${branch}`;
 }
 
-function createCell(age, year, zodiac) {
+function createCell({ age, year, zodiac }) {
   const cell = document.createElement("div");
   cell.className = "cell";
 
@@ -43,10 +43,10 @@ function renderGrid(birthYear) {
   for (let age = 0; age < 80; age += 1) {
     const year = birthYear + age;
     const zodiac = getGanzhi(year);
-    fragment.append(createCell(age, year, zodiac));
+    fragment.appendChild(createCell({ age, year, zodiac }));
   }
 
-  yearGrid.append(fragment);
+  yearGrid.appendChild(fragment);
   yearGrid.dataset.startYear = String(birthYear);
 }
 
