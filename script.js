@@ -18,18 +18,18 @@ function getGanzhi(year) {
 
 function createCell({ age, year, zodiac }) {
   const cell = document.createElement("div");
-  cell.className = "cell";
+  cell.className = "year-table-cell";
 
   const ageEl = document.createElement("div");
-  ageEl.className = "age";
+  ageEl.className = "year-table-age";
   ageEl.textContent = `${age}歳`;
 
   const yearEl = document.createElement("div");
-  yearEl.className = "year";
+  yearEl.className = "year-table-year";
   yearEl.textContent = `${year}年`;
 
   const zodiacEl = document.createElement("div");
-  zodiacEl.className = "zodiac";
+  zodiacEl.className = "year-table-zodiac";
   zodiacEl.textContent = zodiac;
 
   cell.append(ageEl, yearEl, zodiacEl);
