@@ -5,6 +5,7 @@ const BASE_YEAR = 1984; // 甲子
 const GRID_YEARS = 80;
 const DEFAULT_DOWNLOAD_LABEL = "PNGとしてダウンロード";
 const WORKING_DOWNLOAD_LABEL = "画像を作成中...";
+const FALLBACK_FILENAME = "80-years-ganzhi.png";
 
 const form = document.getElementById("birthYearForm");
 const birthYearInput = document.getElementById("birthYear");
@@ -47,7 +48,6 @@ function createCell({ age, year, zodiac }) {
 }
 
 function renderGrid(birthYear) {
-  yearGrid.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
   for (let age = 0; age < GRID_YEARS; age += 1) {
@@ -56,7 +56,7 @@ function renderGrid(birthYear) {
     fragment.appendChild(createCell({ age, year, zodiac }));
   }
 
-  yearGrid.appendChild(fragment);
+  yearGrid.replaceChildren(fragment);
   yearGrid.dataset.startYear = String(birthYear);
 }
 
@@ -88,9 +88,10 @@ async function downloadGridAsPng() {
     const link = document.createElement("a");
     link.href = url;
     const baseYear = yearGrid.dataset.startYear;
-    link.download = baseYear
+    const fileName = baseYear
       ? `${baseYear}-80years-ganzhi.png`
-      : "80-years-ganzhi.png";
+      : FALLBACK_FILENAME;
+    link.download = fileName;
     link.click();
     URL.revokeObjectURL(url);
   } catch (error) {
