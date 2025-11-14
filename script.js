@@ -1,23 +1,12 @@
 const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
 const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 
-const BASE_YEAR = 1984; // 甲子
-const GRID_YEARS = 80;
-const DEFAULT_DOWNLOAD_LABEL = "PNGとしてダウンロード";
-const WORKING_DOWNLOAD_LABEL = "画像を作成中...";
-const FALLBACK_FILENAME = "80-years-ganzhi.png";
-
 const form = document.getElementById("birthYearForm");
 const birthYearInput = document.getElementById("birthYear");
 const yearGrid = document.getElementById("yearGrid");
 const downloadBtn = document.getElementById("downloadBtn");
 
-function setDownloadState({ disabled, label }) {
-  downloadBtn.disabled = disabled;
-  downloadBtn.textContent = label;
-}
-
-setDownloadState({ disabled: true, label: DEFAULT_DOWNLOAD_LABEL });
+const BASE_YEAR = 1984; // 甲子
 
 function getGanzhi(year) {
   const diff = year - BASE_YEAR;
@@ -32,15 +21,15 @@ function createCell({ age, year, zodiac }) {
   cell.className = "cell";
 
   const ageEl = document.createElement("div");
-  ageEl.className = "cell__age";
+  ageEl.className = "age";
   ageEl.textContent = `${age}歳`;
 
   const yearEl = document.createElement("div");
-  yearEl.className = "cell__year";
+  yearEl.className = "year";
   yearEl.textContent = `${year}年`;
 
   const zodiacEl = document.createElement("div");
-  zodiacEl.className = "cell__zodiac";
+  zodiacEl.className = "zodiac";
   zodiacEl.textContent = zodiac;
 
   cell.append(ageEl, yearEl, zodiacEl);
@@ -48,56 +37,44 @@ function createCell({ age, year, zodiac }) {
 }
 
 function renderGrid(birthYear) {
+  yearGrid.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
-  for (let age = 0; age < GRID_YEARS; age += 1) {
+  for (let age = 0; age < 80; age += 1) {
     const year = birthYear + age;
     const zodiac = getGanzhi(year);
     fragment.appendChild(createCell({ age, year, zodiac }));
   }
 
-  yearGrid.replaceChildren(fragment);
-  yearGrid.dataset.startYear = String(birthYear);
-}
-
-function canvasToBlob(canvas) {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error("画像データの作成に失敗しました。"));
-        return;
-      }
-
-      resolve(blob);
-    });
-  });
+  yearGrid.appendChild(fragment);
 }
 
 async function downloadGridAsPng() {
-  setDownloadState({ disabled: true, label: WORKING_DOWNLOAD_LABEL });
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = "画像を作成中...";
 
   try {
     const canvas = await html2canvas(yearGrid, {
       backgroundColor: "#ffffff",
-      scale: Math.min(window.devicePixelRatio, 2),
-      useCORS: true,
+      scale: window.devicePixelRatio,
     });
 
-    const blob = await canvasToBlob(canvas);
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    const baseYear = yearGrid.dataset.startYear;
-    const fileName = baseYear
-      ? `${baseYear}-80years-ganzhi.png`
-      : FALLBACK_FILENAME;
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(url);
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        throw new Error("画像データの作成に失敗しました。");
+      }
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "80-years-ganzhi.png";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
   } catch (error) {
     alert(error.message || "PNGの作成に失敗しました。");
   } finally {
-    setDownloadState({ disabled: false, label: DEFAULT_DOWNLOAD_LABEL });
+    downloadBtn.disabled = false;
+    downloadBtn.textContent = "PNGとしてダウンロード";
   }
 }
 
@@ -111,13 +88,12 @@ form.addEventListener("submit", (event) => {
   }
 
   renderGrid(birthYear);
-  setDownloadState({ disabled: false, label: DEFAULT_DOWNLOAD_LABEL });
+  downloadBtn.disabled = false;
 });
 
 downloadBtn.addEventListener("click", () => {
   if (yearGrid.children.length === 0) {
     return;
   }
-
   downloadGridAsPng();
 });
