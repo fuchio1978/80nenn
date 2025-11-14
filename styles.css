@@ -1,11 +1,11 @@
 :root {
   color-scheme: only light;
   font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
-  --page-max-width: min(100%, 1040px);
-  --page-padding: clamp(6px, 1.5vw, 16px);
-  --panel-radius: 12px;
+  --page-max-width: min(100%, 960px);
+  --page-padding: clamp(4px, 1vw, 12px);
+  --panel-radius: 10px;
   --border-color: #d1d5db;
-  --shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+  --shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
   --accent: #2563eb;
   --accent-dark: #1d4ed8;
   --text-main: #1f2937;
@@ -30,7 +30,7 @@ body {
   display: flex;
   justify-content: center;
   background: #ffffff;
-  padding: clamp(6px, 1.5vw, 14px);
+  padding: clamp(6px, 1.2vw, 12px);
 }
 
 main.page {
@@ -38,7 +38,7 @@ main.page {
   max-width: var(--page-max-width);
   padding: var(--page-padding);
   display: grid;
-  gap: clamp(8px, 1.6vw, 14px);
+  gap: clamp(6px, 1.2vw, 12px);
   background: #ffffff;
 }
 
@@ -51,14 +51,14 @@ main.page {
 }
 
 .controls {
-  padding: clamp(12px, 1.8vw, 18px);
+  padding: clamp(10px, 1.6vw, 16px);
   display: grid;
-  gap: clamp(8px, 1.6vw, 14px);
+  gap: clamp(6px, 1.4vw, 12px);
 }
 
 .controls h1 {
   margin: 0;
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 700;
   letter-spacing: 0.01em;
 }
@@ -66,11 +66,12 @@ main.page {
 .controls label {
   font-weight: 600;
   color: var(--text-muted);
+  font-size: 13px;
 }
 
 .form {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .input-group {
@@ -81,13 +82,13 @@ main.page {
 }
 
 input[type="number"] {
-  flex: 1 1 220px;
+  flex: 1 1 200px;
   min-width: 0;
-  padding: 7px 11px;
-  border-radius: 10px;
+  padding: 6px 10px;
+  border-radius: 9px;
   border: 1px solid var(--border-color);
   background: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
   color: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -101,9 +102,9 @@ input[type="number"]:focus {
 button {
   cursor: pointer;
   border: none;
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 13px;
+  border-radius: 9px;
+  padding: 7px 14px;
+  font-size: 12px;
   font-weight: 600;
   background: var(--accent);
   color: #ffffff;
@@ -132,22 +133,22 @@ button:not(:disabled):active {
 
 .note {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   color: #64748b;
 }
 
 .table-wrapper {
-  padding: clamp(8px, 1.5vw, 14px);
+  padding: clamp(6px, 1.2vw, 12px);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(10, minmax(72px, 1fr));
+  grid-template-columns: repeat(10, minmax(60px, 1fr));
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   background: #ffffff;
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .cell {
@@ -156,9 +157,8 @@ button:not(:disabled):active {
   grid-template-rows: repeat(2, auto);
   align-items: center;
   justify-items: start;
-  gap: 0;
-  padding: 3px 5px 3px 7px;
-  min-height: 34px;
+  padding: 2px 4px 2px 6px;
+  min-height: 30px;
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   background: #ffffff;
@@ -175,11 +175,11 @@ button:not(:disabled):active {
 .cell__age {
   font-weight: 600;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .cell__year {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-main);
 }
 
@@ -189,7 +189,7 @@ button:not(:disabled):active {
   writing-mode: vertical-rl;
   text-orientation: upright;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   align-self: center;
   justify-self: center;
   color: var(--text-main);
@@ -197,13 +197,13 @@ button:not(:disabled):active {
 
 @media (max-width: 900px) {
   .grid {
-    grid-template-columns: repeat(8, minmax(70px, 1fr));
+    grid-template-columns: repeat(8, minmax(58px, 1fr));
   }
 }
 
 @media (max-width: 720px) {
   .grid {
-    grid-template-columns: repeat(6, minmax(64px, 1fr));
+    grid-template-columns: repeat(6, minmax(56px, 1fr));
   }
 }
 
@@ -213,7 +213,7 @@ button:not(:disabled):active {
   }
 
   main.page {
-    padding: clamp(18px, 6vw, 24px);
+    padding: clamp(12px, 5vw, 18px);
   }
 
   .controls,
@@ -225,6 +225,7 @@ button:not(:disabled):active {
   .input-group {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
   }
 
   button,
@@ -233,19 +234,19 @@ button:not(:disabled):active {
   }
 
   .grid {
-    grid-template-columns: repeat(4, minmax(62px, 1fr));
+    grid-template-columns: repeat(4, minmax(54px, 1fr));
   }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 860px) {
   body {
     align-items: center;
   }
 
   main.page {
-    grid-template-columns: minmax(240px, 300px) 1fr;
+    grid-template-columns: minmax(220px, 280px) 1fr;
     align-items: start;
-    gap: clamp(14px, 2vw, 22px);
+    gap: clamp(12px, 1.8vw, 18px);
   }
 
   .controls {
