@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>80年年表ジェネレーター</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <main class="page" aria-labelledby="appTitle">
+      <section class="controls">
+        <h1 id="appTitle">80年年表ジェネレーター</h1>
+        <form id="birthYearForm" class="form">
+          <label for="birthYear">0歳の西暦（生まれ年）</label>
+          <div class="input-group">
+            <input
+              type="number"
+              id="birthYear"
+              name="birthYear"
+              placeholder="例: 1983"
+              min="1"
+              required
+            />
+            <button type="submit">一覧を作成</button>
+          </div>
+        </form>
+        <div class="actions">
+          <button id="downloadBtn" class="download" disabled>
+            PNGとしてダウンロード
+          </button>
+        </div>
+        <p class="note">
+          入力した西暦を0歳として、80年分の「西暦」「年齢」「干支」を一覧表示します。
+        </p>
+      </section>
+
+      <section class="table-wrapper" aria-label="年表">
+        <div id="yearGrid" class="grid" aria-live="polite" role="grid"></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
