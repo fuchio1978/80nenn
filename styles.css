@@ -176,10 +176,10 @@ button:not(:disabled):active { transform: translateY(1px); }
 .cell__age {
   font-weight: 600;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 .cell__year {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--text-main);
 }
 .cell__zodiac {
@@ -188,10 +188,23 @@ button:not(:disabled):active { transform: translateY(1px); }
   writing-mode: vertical-rl;
   text-orientation: upright;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 13px;
   align-self: center;
   justify-self: center;
   color: var(--text-main);
+}
+
+/* PNGキャプチャ用: writing-mode未対応ブラウザ向けフォールバック */
+.zodiac-capture {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.zodiac-capture span {
+  display: block;
+  line-height: 1;
 }
 
 /* ---------- Responsive ---------- */

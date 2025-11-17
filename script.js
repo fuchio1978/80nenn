@@ -66,17 +66,45 @@ form.addEventListener("submit", (e) => {
 // PNG保存（html2canvas）
 downloadBtn.addEventListener("click", async () => {
   if (downloadBtn.disabled) return;
-  // 表だけをキャプチャ
-  const canvas = await html2canvas(grid, {
-    backgroundColor: "#ffffff",
-    scale: 2,          // 解像度アップ
-    useCORS: true
+
+  // --- 干支をキャプチャ用レイアウトに一時変換 ---
+  const zodiacNodes = Array.from(grid.getElementsByClassName("cell__zodiac"));
+  const originalStates = zodiacNodes.map((node) => ({
+    text: node.textContent,
+    html: node.innerHTML,
+    className: node.className,
+  }));
+
+  zodiacNodes.forEach((node) => {
+    const text = node.textContent || "";
+    node.innerHTML = "";
+    node.className = originalStates[0].className + " zodiac-capture";
+    for (const ch of text) {
+      const span = document.createElement("span");
+      span.textContent = ch;
+      node.appendChild(span);
+    }
   });
-  const url = canvas.toDataURL("image/png");
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "80year-table.png";
-  a.click();
+
+  try {
+    // 表だけをキャプチャ
+    const canvas = await html2canvas(grid, {
+      backgroundColor: "#ffffff",
+      scale: 2,          // 解像度アップ
+      useCORS: true
+    });
+    const url = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "80year-table.png";
+    a.click();
+  } finally {
+    // --- 干支レイアウトを元に戻す ---
+    zodiacNodes.forEach((node, i) => {
+      node.innerHTML = originalStates[i].html;
+      node.className = originalStates[i].className;
+    });
+  }
 });
 
 // お好みで：初期描画（今年を0歳とする）
