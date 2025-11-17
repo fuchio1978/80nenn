@@ -23,6 +23,110 @@
             />
             <button type="submit">一覧を作成</button>
           </div>
+
+          <hr class="section-separator" />
+
+          <div class="daiun-group">
+            <div class="daiun-row">
+              <label for="daiunStartAge">立運年齢</label>
+              <input
+                type="number"
+                id="daiunStartAge"
+                name="daiunStartAge"
+                min="0"
+                max="79"
+                placeholder="例: 5"
+              />
+            </div>
+
+            <div class="daiun-row">
+              <label for="daiunStartEto">立運時の干支</label>
+              <select id="daiunStartEto" name="daiunStartEto">
+                <option value="">選択してください</option>
+                <option value="甲子">甲子</option>
+                <option value="乙丑">乙丑</option>
+                <option value="丙寅">丙寅</option>
+                <option value="丁卯">丁卯</option>
+                <option value="戊辰">戊辰</option>
+                <option value="己巳">己巳</option>
+                <option value="庚午">庚午</option>
+                <option value="辛未">辛未</option>
+                <option value="壬申">壬申</option>
+                <option value="癸酉">癸酉</option>
+                <option value="甲戌">甲戌</option>
+                <option value="乙亥">乙亥</option>
+                <option value="丙子">丙子</option>
+                <option value="丁丑">丁丑</option>
+                <option value="戊寅">戊寅</option>
+                <option value="己卯">己卯</option>
+                <option value="庚辰">庚辰</option>
+                <option value="辛巳">辛巳</option>
+                <option value="壬午">壬午</option>
+                <option value="癸未">癸未</option>
+                <option value="甲申">甲申</option>
+                <option value="乙酉">乙酉</option>
+                <option value="丙戌">丙戌</option>
+                <option value="丁亥">丁亥</option>
+                <option value="戊子">戊子</option>
+                <option value="己丑">己丑</option>
+                <option value="庚寅">庚寅</option>
+                <option value="辛卯">辛卯</option>
+                <option value="壬辰">壬辰</option>
+                <option value="癸巳">癸巳</option>
+                <option value="甲午">甲午</option>
+                <option value="乙未">乙未</option>
+                <option value="丙申">丙申</option>
+                <option value="丁酉">丁酉</option>
+                <option value="戊戌">戊戌</option>
+                <option value="己亥">己亥</option>
+                <option value="庚子">庚子</option>
+                <option value="辛丑">辛丑</option>
+                <option value="壬寅">壬寅</option>
+                <option value="癸卯">癸卯</option>
+                <option value="甲辰">甲辰</option>
+                <option value="乙巳">乙巳</option>
+                <option value="丙午">丙午</option>
+                <option value="丁未">丁未</option>
+                <option value="戊申">戊申</option>
+                <option value="己酉">己酉</option>
+                <option value="庚戌">庚戌</option>
+                <option value="辛亥">辛亥</option>
+                <option value="壬子">壬子</option>
+                <option value="癸丑">癸丑</option>
+                <option value="甲寅">甲寅</option>
+                <option value="乙卯">乙卯</option>
+                <option value="丙辰">丙辰</option>
+                <option value="丁巳">丁巳</option>
+                <option value="戊午">戊午</option>
+                <option value="己未">己未</option>
+                <option value="庚申">庚申</option>
+                <option value="辛酉">辛酉</option>
+                <option value="壬戌">壬戌</option>
+                <option value="癸亥">癸亥</option>
+              </select>
+            </div>
+
+            <div class="daiun-row daiun-direction">
+              <span class="daiun-direction__label">運の巡り</span>
+              <label>
+                <input
+                  type="radio"
+                  name="daiunDirection"
+                  value="forward"
+                  checked
+                />
+                順行
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="daiunDirection"
+                  value="backward"
+                />
+                逆行
+              </label>
+            </div>
+          </div>
         </form>
         <button id="downloadBtn" class="download" disabled>
           PNGとしてダウンロード
