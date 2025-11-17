@@ -121,6 +121,56 @@ button:not(:disabled):active { transform: translateY(1px); }
 
 .note { margin: 0; font-size: 11px; color: #64748b; }
 
+/* 大運入力エリア */
+.section-separator {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+.daiun-group {
+  display: grid;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.daiun-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.daiun-row label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.daiun-row input[type="number"],
+.daiun-row select {
+  flex: 1 1 120px;
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+}
+
+.daiun-direction {
+  gap: 10px;
+}
+
+.daiun-direction__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.daiun-direction input[type="radio"] {
+  margin-right: 2px;
+}
+
 .table-wrapper {
   padding: clamp(4px, 0.8vw, 8px);
   /* 横スクロールはOK、縦は切らない */
