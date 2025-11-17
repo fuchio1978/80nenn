@@ -223,6 +223,34 @@ button:not(:disabled):active { transform: translateY(1px); }
 .cell:nth-last-child(-n + 10) { border-bottom: none; }
 
 /* テキスト */
+
+/* 大運ハイライト */
+.cell--daiun {
+  position: relative;
+}
+
+.cell--daiun-0 { background-color: #f1f5f9; }
+.cell--daiun-1 { background-color: #e0f2fe; }
+.cell--daiun-2 { background-color: #dcfce7; }
+.cell--daiun-3 { background-color: #fef9c3; }
+.cell--daiun-4 { background-color: #fee2e2; }
+.cell--daiun-5 { background-color: #ede9fe; }
+.cell--daiun-6 { background-color: #fce7f3; }
+.cell--daiun-7 { background-color: #e5e7eb; }
+
+.cell__daiun-label {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #14532d;
+  color: #f9fafb;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .cell__age {
   font-weight: 600;
   color: var(--text-muted);
