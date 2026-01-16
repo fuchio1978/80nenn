@@ -37,6 +37,14 @@ body {
   padding: clamp(4px, 0.8vw, 10px);
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(4px, 0.8vw, 10px);
+}
+
 /* ---------- page / panels ---------- */
 
 main.page {
@@ -288,11 +296,26 @@ button:not(:disabled):active { transform: translateY(1px); }
 /* ---------- Responsive ---------- */
 
 @media (max-width: 520px) {
-  main.page { padding: clamp(12px, 5vw, 18px); }
+  body {
+    /* 中央寄せレイアウトをやめて、画面幅いっぱいに使う */
+    display: block;
+    padding: 8px;
+  }
 
-  .controls, .table-wrapper {
+  main.page {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 10px;
+  }
+
+  .controls,
+  .table-wrapper {
     border-radius: 14px;
     box-shadow: none;
+  }
+
+  .table-wrapper {
+    padding: 6px;
   }
 
   .input-group {
@@ -301,7 +324,28 @@ button:not(:disabled):active { transform: translateY(1px); }
     gap: 8px;
   }
 
-  button, .download { width: 100%; }
+  button,
+  .download {
+    width: 100%;
+  }
+
+  /* グリッド内テキストをやや小さくして窮屈さを軽減 */
+  .grid {
+    font-size: 9px;
+  }
+
+  .cell {
+    padding: 2px 3px;
+  }
+
+  .cell__age,
+  .cell__year {
+    font-size: 10px;
+  }
+
+  .cell__zodiac {
+    font-size: 11px;
+  }
 }
 
 @media (min-width: 860px) {
