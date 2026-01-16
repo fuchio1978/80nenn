@@ -329,9 +329,11 @@ button:not(:disabled):active { transform: translateY(1px); }
     width: 100%;
   }
 
-  /* グリッド内テキストをやや小さくして窮屈さを軽減 */
+  /* グリッドの高さ固定をやめ、内容に応じて縦方向に広がるようにする */
   .grid {
-    font-size: 9px;
+    font-size: 9px;      /* テキストはやや小さめ */
+    aspect-ratio: auto;  /* 10:8 固定を解除して高さに余裕を持たせる */
+    grid-auto-rows: auto;
   }
 
   .cell {
